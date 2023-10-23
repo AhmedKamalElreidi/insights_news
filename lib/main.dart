@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insights_news/core/colors.dart';
-import 'package:insights_news/splash_view.dart';
+import 'package:insights_news/features/home/home_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 borderSide: const BorderSide(color: Colors.red)),
           )),
-      home: const SplashView(),
+      home: const HomeView(),
     );
   }
 }

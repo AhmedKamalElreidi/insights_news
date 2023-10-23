@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insights_news/core/colors.dart';
 import 'package:insights_news/features/news/news_view.dart';
 import 'package:insights_news/features/notifications/notification_view.dart';
@@ -33,16 +34,48 @@ class _HomeViewState extends State<HomeView> {
         },
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.sacffoldBG,
-        selectedItemColor: AppColors.lomanda,
-        unselectedItemColor: AppColors.grey,
+        // selectedItemColor: AppColors.lomanda,
+        // unselectedItemColor: AppColors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Home'),
+        items: [
+          // BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          // BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Home'),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.notifications), label: 'Search'),
+          // BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile')
           BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile')
+              icon: SvgPicture.asset('assets/home.svg'),
+              label: 'Home',
+              activeIcon: SvgPicture.asset(
+                'assets/home.svg',
+                colorFilter:
+                    ColorFilter.mode(AppColors.lomanda, BlendMode.srcIn),
+              )),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/Group.svg'),
+              label: 'Home',
+              activeIcon: SvgPicture.asset(
+                'assets/Group.svg',
+                colorFilter:
+                    ColorFilter.mode(AppColors.lomanda, BlendMode.srcIn),
+              )),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/Notification.svg'),
+              label: 'Notification',
+              activeIcon: SvgPicture.asset(
+                'assets/Notification.svg',
+                colorFilter:
+                    ColorFilter.mode(AppColors.lomanda, BlendMode.srcIn),
+              )),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/Vector.svg'),
+              label: 'Vector',
+              activeIcon: SvgPicture.asset(
+                'assets/Vector.svg',
+                colorFilter:
+                    ColorFilter.mode(AppColors.lomanda, BlendMode.srcIn),
+              )),
         ],
       ),
     );

@@ -9,7 +9,6 @@ class RegisterView extends StatefulWidget {
   @override
   State<RegisterView> createState() => _RegisterViewState();
 }
-
 class _RegisterViewState extends State<RegisterView> {
   var formKey = GlobalKey<FormState>();
   bool isVisable = true;

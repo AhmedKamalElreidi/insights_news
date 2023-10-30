@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insights_news/core/colors.dart';
-import 'package:insights_news/features/home/home_view.dart';
+import 'package:insights_news/splash_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            color: AppColors.sacffoldBG,
+            elevation: 0.0,
+          ),
           iconTheme: IconThemeData(color: AppColors.grey),
           scaffoldBackgroundColor: AppColors.sacffoldBG,
           inputDecorationTheme: InputDecorationTheme(
@@ -33,7 +37,7 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 borderSide: const BorderSide(color: Colors.red)),
           )),
-      home: const HomeView(),
+      home: const SplashView(),
     );
   }
 }

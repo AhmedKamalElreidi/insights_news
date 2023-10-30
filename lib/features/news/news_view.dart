@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:insights_news/core/colors.dart';
+import 'package:insights_news/core/loacl_data.dart';
 import 'package:insights_news/features/news/widgets/news_list_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -30,15 +33,27 @@ class _NewsViewState extends State<NewsView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Hello , Sayed',
-                        style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(
-                        height: 5,
+                      FutureBuilder(
+                        future: AppLocal.getChached(AppLocal.nameKey),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                              'Hello , ${snapshot.data!.split(' ').first}',
+                              style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            );
+                          } else {
+                            return Text(
+                              'Hello ,',
+                              style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            );
+                          }
+                        },
                       ),
                       Text(
                         'Have A Nice Day',
@@ -47,14 +62,31 @@ class _NewsViewState extends State<NewsView> {
                     ],
                   ),
                   // const Spacer(),
-                  const CircleAvatar(
-                    radius: 22,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage('assets/user.jpg'),
-                    ),
-                  )
+                  FutureBuilder(
+                    future: AppLocal.getChached(AppLocal.imageKey),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return CircleAvatar(
+                          radius: 22,
+                          backgroundColor: Colors.white,
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: FileImage(File(snapshot.data!)),
+                          ),
+                        );
+                      } else {
+                        return const CircleAvatar(
+                          radius: 22,
+                          backgroundColor: Colors.white,
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.grey,
+                            backgroundImage: AssetImage("assets/user.png"),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 20),

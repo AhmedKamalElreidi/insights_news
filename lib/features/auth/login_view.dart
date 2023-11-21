@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insights_news/core/colors.dart';
+import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/auth/register_view.dart';
 
 class LoginView extends StatefulWidget {

@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:insights_news/core/colors.dart';
-import 'package:insights_news/core/loacl_data.dart';
+import 'package:insights_news/core/storage/loacl_data.dart';
+import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/news/widgets/news_list_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -34,7 +34,7 @@ class _NewsViewState extends State<NewsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FutureBuilder(
-                        future: AppLocal.getChached(AppLocal.nameKey),
+                        future: AppLocal.getData(AppLocal.Name_Key),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Text(
@@ -63,7 +63,7 @@ class _NewsViewState extends State<NewsView> {
                   ),
                   // const Spacer(),
                   FutureBuilder(
-                    future: AppLocal.getChached(AppLocal.imageKey),
+                    future: AppLocal.getData(AppLocal.Image_Key),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return CircleAvatar(
@@ -164,10 +164,18 @@ class _NewsViewState extends State<NewsView> {
               const Expanded(
                   child: TabBarView(
                 children: [
-                  NewsListViewWidget(),
-                  NewsListViewWidget(),
-                  NewsListViewWidget(),
-                  NewsListViewWidget(),
+                  NewsListViewWidget(
+                    data: 'Science',
+                  ),
+                  NewsListViewWidget(
+                    data: 'Sports',
+                  ),
+                  NewsListViewWidget(
+                    data: 'entertainment',
+                  ),
+                  NewsListViewWidget(
+                    data: 'Business',
+                  ),
                 ],
               ))
             ],

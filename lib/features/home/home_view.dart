@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:insights_news/core/colors.dart';
+import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/news/news_view.dart';
 import 'package:insights_news/features/notifications/notification_view.dart';
 import 'package:insights_news/features/profile/profile_view.dart';
@@ -62,7 +62,7 @@ class _HomeViewState extends State<HomeView> {
               )),
           BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/Notification.svg'),
-              label: 'Notification',
+              label: 'Sources',
               activeIcon: SvgPicture.asset(
                 'assets/Notification.svg',
                 colorFilter:

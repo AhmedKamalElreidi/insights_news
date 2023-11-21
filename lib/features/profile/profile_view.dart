@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:insights_news/core/colors.dart';
-import 'package:insights_news/core/loacl_data.dart';
+import 'package:hive/hive.dart';
+import 'package:insights_news/core/storage/loacl_data.dart';
+import 'package:insights_news/core/utils/colors.dart';
+import 'package:insights_news/features/home/home_view.dart';
+import 'package:insights_news/features/profile/widgets/show_dialog.dart';
 
-String? imagePath;
 String name = '';
-bool nameCached = true;
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -17,210 +17,134 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  showModelSheet() {
-    return showModalBottomSheet(
-      backgroundColor: Colors.grey,
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.all(22),
-          height: 170,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  getImageFrom(ImageSource.camera);
-                },
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.camera,
-                      size: 30,
-                    ),
-                    SizedBox(
-                      width: 11,
-                    ),
-                    Text(
-                      "from camera",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-              GestureDetector(
-                onTap: () {
-                  getImageFrom(ImageSource.gallery);
-                },
-                // uploadImage2screen(ImageSource.gallery);
-
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.photo_outlined,
-                      size: 30,
-                    ),
-                    SizedBox(
-                      width: 11,
-                    ),
-                    Text(
-                      "From Gallery",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  getImageFrom(ImageSource type) async {
-    final pickedImage = await ImagePicker().pickImage(source: type);
-    if (pickedImage != null) {
-      AppLocal.cacheData(AppLocal.imageKey, pickedImage.path);
-      setState(() {
-        imagePath = pickedImage.path;
-      });
-    }
-  }
-
-  // ignore: prefer_typing_uninitialized_variables
-  var textCon;
+  // var box;
   @override
   void initState() {
     super.initState();
-    AppLocal.getChached(AppLocal.nameKey).then((value) {
+    Hive.openBox('user');
+    AppLocal.getData(AppLocal.Name_Key).then((value) {
       setState(() {
         name = value;
       });
     });
-    textCon = TextEditingController(text: name);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const HomeView(),
+              ));
+            },
+            icon: const Icon(Icons.arrow_back_ios_new_rounded)),
+        //  ---- mode ---------
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FutureBuilder(
-              future: AppLocal.getChached(AppLocal.imageKey),
-              builder: (context, snapshot) {
-                return Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromARGB(128, 78, 91, 110)),
-                  child: Stack(children: [
-                    snapshot.data == null
-                        ? const CircleAvatar(
-                            radius: 62,
-                            backgroundColor: Colors.white,
-                            child: CircleAvatar(
-                              radius: 60,
-                              backgroundColor: Colors.grey,
-                              backgroundImage: AssetImage("assets/user.png"),
-                            ),
-                          )
-                        : CircleAvatar(
-                            radius: 62,
-                            backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // ----------- image------------
+
+              FutureBuilder(
+                  future: AppLocal.getData(AppLocal.Image_Key),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          CircleAvatar(
+                            radius: 60,
+                            backgroundColor: AppColors.lomanda,
                             child: CircleAvatar(
                               radius: 60,
                               backgroundImage: FileImage(File(snapshot.data!)),
                             ),
                           ),
-                    Positioned(
-                      bottom: -15,
-                      right: -10,
-                      child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showModelSheet();
-                          });
-                        },
-                        icon: const Icon(Icons.add_a_photo),
-                      ),
-                    ),
-                  ]),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Divider(
-              color: AppColors.lomanda,
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: nameCached
-                  ? GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          nameCached = false;
-                        });
+                          GestureDetector(
+                            onTap: () {
+                              showImageDialog(context, onTapCamera: () async {
+                                await getImagefromCamera().then((value) {
+                                  setState(() {});
+                                  Navigator.of(context).pop();
+                                });
+                              }, onTapGallery: () async {
+                                await getImagefromGallery().then((value) {
+                                  setState(() {});
+                                  Navigator.of(context).pop();
+                                });
+                              });
+                            },
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              child: Icon(
+                                Icons.camera_alt_rounded,
+                                size: 20,
+                                color: AppColors.lomanda,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return CircleAvatar(
+                        radius: 60,
+                        backgroundColor: AppColors.lightBg,
+                        child: const CircleAvatar(
+                            radius: 60,
+                            backgroundImage: AssetImage('assets/user.png')),
+                      );
+                    }
+                  }),
+              const SizedBox(
+                height: 20,
+              ),
+
+              // ----------- divider------------
+
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Divider(
+                  color: AppColors.grey,
+                  thickness: .7,
+                ),
+              ),
+
+              // ----------- name------------
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(color: AppColors.lomanda, fontSize: 20),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        showNameDialog(context, name);
+                        setState(() {});
                       },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        alignment: Alignment.centerLeft,
-                        width: 350,
-                        height: 50,
+                      icon: Container(
+                        padding: const EdgeInsets.all(2),
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: AppColors.containerBG,
-                          borderRadius: BorderRadius.circular(15),
+                            shape: BoxShape.circle,
+                            border: Border.all(color: AppColors.lomanda)),
+                        child: Icon(
+                          Icons.mode_edit_outline_outlined,
+                          color: AppColors.lomanda,
                         ),
-                        child: Text(name,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 17)),
-                      ),
-                    )
-                  : TextFormField(
-                      controller: textCon,
-                      //دى هستخدمها  لو مش هعمل توجل بين الكونتينر و التيكست فيلد   بى الكاش نيم  دى هخزن القيمة جوه التيكست فيلد عادى
-                      // onFieldSubmitted: (value) {
-                      //   if (name.isNotEmpty) {
-                      //     setState(() {
-                      //       AppLocal.cacheData(AppLocal.nameKey, name);
-                      //     });
-                      //   } else {
-                      //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      //         backgroundColor: Colors.red,
-                      //         content: Text('Please Enter Your Name')));
-                      //   }
-                      // },
-                      cursorColor: AppColors.lomanda,
-                      onChanged: (value) {
-                        setState(() {
-                          name = value;
-                          AppLocal.cacheData(AppLocal.nameKey, name);
-                        });
-                      },
-                      style: TextStyle(color: AppColors.white),
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide()),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide()),
-                          hintText: 'Enter Your Name',
-                          hintStyle: TextStyle(color: AppColors.grey),
-                          filled: true,
-                          fillColor: AppColors.containerBG),
-                    ),
-            ),
-          ],
+                      ))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

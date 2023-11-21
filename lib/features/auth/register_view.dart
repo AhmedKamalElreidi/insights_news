@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insights_news/core/colors.dart';
+import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/auth/login_view.dart';
 import 'package:insights_news/features/home/home_view.dart';
 
@@ -9,6 +9,7 @@ class RegisterView extends StatefulWidget {
   @override
   State<RegisterView> createState() => _RegisterViewState();
 }
+
 class _RegisterViewState extends State<RegisterView> {
   var formKey = GlobalKey<FormState>();
   bool isVisable = true;

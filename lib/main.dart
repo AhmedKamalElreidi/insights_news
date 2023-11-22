@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:insights_news/core/utils/colors.dart';
-import 'package:insights_news/features/home/home_view.dart';
+import 'package:insights_news/features/splash_view/splash_view.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 borderSide: const BorderSide(color: Colors.red)),
           )),
-      home: const HomeView(),
+      home: const SplashView(),
     );
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:insights_news/core/storage/loacl_data.dart';
 import 'package:insights_news/core/utils/colors.dart';
-import 'package:insights_news/features/home/home_view.dart';
-import 'package:insights_news/features/upload/upload_view.dart';
+import 'package:insights_news/features/auth/login_view.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -16,12 +15,15 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () {
-      AppLocal.getData(AppLocal.IS_UPLOAD).then((value) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) =>
-              (value ?? false) ? const HomeView() : const UploadView(),
-        ));
-      });
+      // AppLocal.getData(AppLocal.IS_UPLOAD).then((value) {
+      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //     builder: (context) =>
+      //    (value ?? false) ? const HomeView() : const UploadView(),
+      //   ));
+      // });
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const LoginView(),
+      ));
     });
   }
 
@@ -33,9 +35,13 @@ class _SplashViewState extends State<SplashView> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/logo.png',
-            width: 250,
+          // Image.asset(
+          //   'assets/logo.png',
+          //   width: 250,
+          // ),
+          Lottie.asset(
+            'assets/news.json',
+            height: 250,
           ),
           Text(
             'Insight News',

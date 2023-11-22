@@ -34,7 +34,7 @@ class NewsListViewWidget extends StatelessWidget {
                         }
                       },
                       child: Container(
-                        height: 100,
+                        height: 110,
                         decoration: BoxDecoration(
                             color: AppColors.containerBG,
                             borderRadius: BorderRadius.circular(15)),

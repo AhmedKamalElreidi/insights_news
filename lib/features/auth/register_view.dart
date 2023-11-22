@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/auth/login_view.dart';
-import 'package:insights_news/features/home/home_view.dart';
+import 'package:insights_news/features/upload/upload_view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -39,19 +39,19 @@ class _RegisterViewState extends State<RegisterView> {
                   const SizedBox(
                     height: 40,
                   ),
-                  TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Name must not be empty!';
-                      }
-                      return null;
-                    },
-                    style: TextStyle(color: AppColors.white),
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person), label: Text('Name')),
-                  ),
-                  const SizedBox(height: 15),
+                  // TextFormField(
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return 'Name must not be empty!';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   style: TextStyle(color: AppColors.white),
+                  //   keyboardType: TextInputType.emailAddress,
+                  //   decoration: const InputDecoration(
+                  //       prefixIcon: Icon(Icons.person), label: Text('Name')),
+                  // ),
+                  // const SizedBox(height: 15),
                   TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -93,8 +93,13 @@ class _RegisterViewState extends State<RegisterView> {
                   GestureDetector(
                     onTap: () {
                       if (formKey.currentState!.validate()) {
+                        // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        //   builder: (context) => const HomeView(),
+                        // ));
+
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const HomeView(),
+                          builder: (context) => const UploadView(),
+                          //  (value ?? false) ? const HomeView() : const UploadView(),
                         ));
                       }
                     },

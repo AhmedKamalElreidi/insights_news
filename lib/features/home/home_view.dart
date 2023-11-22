@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/news/news_view.dart';
-import 'package:insights_news/features/notifications/notification_view.dart';
 import 'package:insights_news/features/profile/profile_view.dart';
+import 'package:insights_news/features/resources/resources_view.dart';
 import 'package:insights_news/features/search/search_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -61,10 +61,17 @@ class _HomeViewState extends State<HomeView> {
                     ColorFilter.mode(AppColors.lomanda, BlendMode.srcIn),
               )),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/Notification.svg'),
+              icon: SvgPicture.asset(
+                'assets/resource.svg',
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),
+              ),
               label: 'Sources',
               activeIcon: SvgPicture.asset(
-                'assets/Notification.svg',
+                'assets/resource.svg',
+                width: 20,
+                height: 20,
                 colorFilter:
                     ColorFilter.mode(AppColors.lomanda, BlendMode.srcIn),
               )),

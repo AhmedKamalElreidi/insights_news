@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/auth/login_view.dart';
-import 'package:lottie/lottie.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -35,14 +34,14 @@ class _SplashViewState extends State<SplashView> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Image.asset(
-          //   'assets/logo.png',
-          //   width: 250,
-          // ),
-          Lottie.asset(
-            'assets/news.json',
-            height: 250,
+          Image.asset(
+            'assets/logo.png',
+            width: 250,
           ),
+          // Lottie.asset(
+          //   'assets/news.json',
+          //   height: 250,
+          // ),
           Text(
             'Insight News',
             style: TextStyle(

@@ -114,6 +114,8 @@ class _SearchViewState extends State<SearchView> {
                                             const SizedBox(width: 10),
                                             Expanded(
                                               child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceAround,
@@ -144,8 +146,9 @@ class _SearchViewState extends State<SearchView> {
                                                       Text(
                                                         'Read',
                                                         style: TextStyle(
-                                                            color: AppColors
-                                                                .white),
+                                                            color:
+                                                                AppColors.white,
+                                                            fontSize: 13),
                                                       )
                                                     ],
                                                   )
@@ -158,7 +161,9 @@ class _SearchViewState extends State<SearchView> {
                                     );
                                   },
                                   separatorBuilder: (context, index) {
-                                    return const Divider();
+                                    return const SizedBox(
+                                      height: 10,
+                                    );
                                   },
                                   itemCount: state.model.articles!.length),
                             ),

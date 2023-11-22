@@ -18,6 +18,17 @@ class NewsCubit extends Cubit<NewsState> {
     }
   }
 
+  getNewsSlider(String category) async {
+    emit(SliderLoadingState());
+    try {
+      await ApiServices().getNewsForSlider(category).then((value) {
+        emit(SliderSuccessState(model: value!));
+      });
+    } catch (e) {
+      emit(SliderErrorState(error: e.toString()));
+    }
+  }
+
   getSearch(String query) async {
     emit(SearchLoadingState());
     try {

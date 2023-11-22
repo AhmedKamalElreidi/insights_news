@@ -35,3 +35,18 @@ final class SearchErrorState extends NewsState {
 
   SearchErrorState({required this.error});
 }
+/* ********************** Slider *************************    */
+
+final class SliderLoadingState extends NewsState {}
+
+final class SliderSuccessState extends NewsState {
+  final NewsModel model;
+
+  SliderSuccessState({required this.model});
+}
+
+final class SliderErrorState extends NewsState {
+  final String error;
+
+  SliderErrorState({required this.error});
+}

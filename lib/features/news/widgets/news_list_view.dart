@@ -13,9 +13,7 @@ class NewsListViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NewsCubit()
-        ..getNews(
-            data), //  م لو عايز استدعى اوبجكت داخل كلاس من غير ما اخد نسخة منو
+      create: (context) => NewsCubit()..getNews(data),
       child: BlocBuilder<NewsCubit, NewsState>(
         builder: (context, state) {
           if (state is NewsSuccessState) {
@@ -44,7 +42,7 @@ class NewsListViewWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15),
                               child: Image.network(
                                 data.urlToImage ?? "",
-                                width: 160,
+                                width: 150,
                                 height: 100,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
@@ -60,6 +58,7 @@ class NewsListViewWidget extends StatelessWidget {
                             const SizedBox(width: 10),
                             Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
@@ -83,8 +82,9 @@ class NewsListViewWidget extends StatelessWidget {
                                       ),
                                       Text(
                                         'Read',
-                                        style:
-                                            TextStyle(color: AppColors.white),
+                                        style: TextStyle(
+                                            color: AppColors.white,
+                                            fontSize: 13),
                                       )
                                     ],
                                   )
@@ -97,7 +97,9 @@ class NewsListViewWidget extends StatelessWidget {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const Divider();
+                    return const SizedBox(
+                      height: 10,
+                    );
                   },
                   itemCount: state.model.articles!.length),
             );

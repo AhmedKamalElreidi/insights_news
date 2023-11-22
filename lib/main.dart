@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:insights_news/core/utils/colors.dart';
 import 'package:insights_news/features/splash_view/splash_view.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          fontFamily: GoogleFonts.poppins().fontFamily,
           appBarTheme: AppBarTheme(
             color: AppColors.sacffoldBG,
             elevation: 0.0,
